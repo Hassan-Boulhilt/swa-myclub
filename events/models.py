@@ -15,7 +15,7 @@ class Venue(models.Model):
 class MyClubUser(models.Model):
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
-    email = models.EmailField('User Email', blank=True)
+    email = models.EmailField('User Email')
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
