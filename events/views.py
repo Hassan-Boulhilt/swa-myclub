@@ -3,6 +3,7 @@ from django.shortcuts import render
 from datetime import date
 import calendar
 from calendar import HTMLCalendar
+from .models import Event 
 
 
 def index(request, month=date.today().month, year=date.today().year):
@@ -16,6 +17,19 @@ def index(request, month=date.today().month, year=date.today().year):
         year = date.today().year
     month_name = calendar.month_name[month]
     cal = HTMLCalendar().formatmonth(year, month)
+    announcements = [
+        {
+            'date': '20-03-2021',
+            'announcement': "Club Registrations Open"
+        },
+         {
+            'date': '13-04-2021',
+            'announcement': "Joe Smith Elected New Club President"
+        }
+    ]
     title = f"MyClub Event - {month_name}, {year}"
     # return HttpResponse(f'<h1>{title}{cal}</h1>')
-    return render(request, 'events/calendar_base.html', {'title':title, 'cal':cal})
+    return render(request, 'events/calendar_base.html', {'title':title, 'cal':cal,'announcements':announcements})
+def all_events(request):
+    event_list = Event.objects.all()
+    return render(request, 'events/event_list.html',{'event_list':event_list})
