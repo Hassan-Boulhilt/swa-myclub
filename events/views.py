@@ -1,11 +1,13 @@
 from django.http.response import HttpResponse
 from django.shortcuts import render
+from django.http import HttpResponseRedirect
 from datetime import date
 import calendar
 from calendar import HTMLCalendar
 from .models import Event 
+from .forms import VenueForm
 
-
+# Show calaendar in home page 
 def index(request, month=date.today().month, year=date.today().year):
     # t = date.today()
     # month = date.strftime(t, '%b')
@@ -30,6 +32,26 @@ def index(request, month=date.today().month, year=date.today().year):
     title = f"MyClub Event - {month_name}, {year}"
     # return HttpResponse(f'<h1>{title}{cal}</h1>')
     return render(request, 'events/calendar_base.html', {'title':title, 'cal':cal,'announcements':announcements})
+
+# Display all events
 def all_events(request):
     event_list = Event.objects.all()
     return render(request, 'events/event_list.html',{'event_list':event_list})
+
+# Add venue to event model 
+
+def add_venue(request):
+     submitted = False
+     if request.method == 'POST':
+         form = VenueForm(request.POST)
+         if form.is_valid():
+             form.save()
+             return HttpResponseRedirect('/add_venue/?submitted=True')
+     else:
+         form = VenueForm()
+         if 'submitted' in request.GET:
+             submitted = True
+     return render(request, 
+         'events/add_venue.html', 
+         {'form': form, 'submitted': submitted}
+         )
