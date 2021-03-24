@@ -1,10 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+# subclass models.Manager to build custom model that inherits all its methods
+
 class EventManager(models.Manager):
     def event_type_count(self, event_type):
         return self.filter(name__icontains=event_type).count()
-
+# subclass models.Manager to build custom model and override one of its methods "get_queryset" method
 class VenueManager(models.Manager):
      def get_queryset(self):
          return super(VenueManager, self).get_queryset().filter(zip_code='00000')
@@ -37,7 +39,30 @@ class Event(models.Model):
     events = EventManager()
     attendees = models.ManyToManyField(MyClubUser, blank=True)
 
+    # add a custom method to model Event
+    def event_timing(self, date):
+         if self.event_date > date:
+             return "Event is after this date"
+         elif self.event_date == date:
+             return "Event is on the same day"
+         else:
+             return "Event is before this date"
+    # override a method in Event model "name_slug" and use decorator that allows access method directly
+    @property
+    def name_slug(self):
+         return self.name.lower().replace(' ','-')
+
+    # override save method 
+    def save(self, *args, **kwargs):
+         self.manager = User.objects.get(username='admin') # User 'admin' must exist
+         super(Event, self).save(*args, **kwargs)
+
+
     def __str__(self):
         return self.name
 
+
+
+    
+ 
 
