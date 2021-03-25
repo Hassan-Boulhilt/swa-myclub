@@ -6,6 +6,33 @@ import calendar
 from calendar import HTMLCalendar
 from .models import Event 
 from .forms import VenueForm
+# PDF import
+from django.http import FileResponse
+import io
+from reportlab.pdfgen import canvas
+from reportlab.lib.units import inch
+from reportlab.lib.pagesizes import letter
+
+# PDF implement 
+
+def gen_pdf(request):
+    buf = io.BytesIO()
+    c = canvas.Canvas(buf, pagesize=letter, bottomup=0)
+    textob = c.beginText()
+    textob.setTextOrigin(inch, inch)
+    textob.setFont("Helvetica-Oblique", 14)
+    lines = [
+    "I will not expose the ignorance of the faculty.",
+    "I will not conduct my own fire drills.",
+    "I will not prescribe medication.",
+    ]
+    for line in lines:
+        textob.textLine(line)
+    c.drawText(textob)
+    c.showPage()
+    c.save()
+    buf.seek(0)
+    return FileResponse(buf, as_attachment=True, filename='bart.pdf')
 
 # Show calaendar in home page 
 def index(request, month=date.today().month, year=date.today().year):
