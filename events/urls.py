@@ -10,4 +10,5 @@ urlpatterns=[
     path('events/', views.all_events, name='event_list'),
     path('add_venue/', views.add_venue, name='add-venue'),
     path('genpdf/', views.gen_pdf, name='generate-pdf-file'),
+    path('getsubs/', views.list_subscribers, name='list-subscribers'),
 ]

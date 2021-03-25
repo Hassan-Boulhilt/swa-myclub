@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from datetime import date
 import calendar
 from calendar import HTMLCalendar
-from .models import Event 
+from .models import Event, MyClubUser
 from .forms import VenueForm
 # PDF import
 from django.http import FileResponse
@@ -12,6 +12,7 @@ import io
 from reportlab.pdfgen import canvas
 from reportlab.lib.units import inch
 from reportlab.lib.pagesizes import letter
+from django.core.paginator import Paginator
 
 # PDF implement 
 
@@ -33,6 +34,14 @@ def gen_pdf(request):
     c.save()
     buf.seek(0)
     return FileResponse(buf, as_attachment=True, filename='bart.pdf')
+
+
+# Pagination
+def list_subscribers(request):
+    p = Paginator(MyClubUser.objects.all(), 1)
+    page = request.GET.get('page')
+    subscribers = p.get_page(page)
+    return render(request, 'events/subscribers.html', {'subscribers': subscribers})
 
 # Show calaendar in home page 
 def index(request, month=date.today().month, year=date.today().year):
