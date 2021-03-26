@@ -1,3 +1,5 @@
+from django.core import serializers
+from datetime import datetime
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import FileResponse
@@ -45,3 +47,35 @@ def gen_pdf(request):
     c.save()
     buf.seek(0)
     return FileResponse(buf, as_attachment=True, filename='bart.pdf')
+
+def template_demo(request):
+        empty_list = []
+        color_list = ['red', 'green', 'blue', 'yellow']
+        somevar = 5
+        anothervar = 21
+        today = datetime.now()
+        past = datetime(1985, 11, 5)
+        future = datetime(2035, 11, 5)
+        best_bands = [
+        {'name': 'The Angels', 'country': 'Australia'},
+        {'name': 'AC/DC', 'country': 'Australia'},
+        {'name': 'Nirvana', 'country': 'USA'},
+        {'name': 'The Offspring', 'country': 'USA'},
+        {'name': 'Iron Maiden', 'country': 'UK'},
+        {'name': 'Rammstein', 'country': 'Germany'},
+        ]
+        aussie_bands = ['Australia', ['The Angels', 'AC/DC', 'The Living End']]
+        venues_js = serializers.serialize('json', Venue.venues.all())
+        return render(request, 'events/template_demo.html',
+        {
+        'somevar': somevar,
+        'anothervar': anothervar,
+        'empty_list': empty_list,
+        'color_list': color_list,
+        'best_bands': best_bands,
+        'today': today,
+        'past': past,
+        'future': future,
+        'aussie_bands': aussie_bands,
+        'venues': venues_js,
+        })
