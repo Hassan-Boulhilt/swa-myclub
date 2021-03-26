@@ -1,47 +1,13 @@
-from django.http.response import HttpResponse
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
+from django.template.response import TemplateResponse
+from django.core.paginator import Paginator
 from datetime import date
 import calendar
 from calendar import HTMLCalendar
-from .models import Event, MyClubUser
-from .forms import VenueForm
-# PDF import
-from django.http import FileResponse
-import io
-from reportlab.pdfgen import canvas
-from reportlab.lib.units import inch
-from reportlab.lib.pagesizes import letter
-from django.core.paginator import Paginator
+from events.models import Event, Venue, MyClubUser
+from events.forms import VenueForm
 
-# PDF implement 
-
-def gen_pdf(request):
-    buf = io.BytesIO()
-    c = canvas.Canvas(buf, pagesize=letter, bottomup=0)
-    textob = c.beginText()
-    textob.setTextOrigin(inch, inch)
-    textob.setFont("Helvetica-Oblique", 14)
-    lines = [
-    "I will not expose the ignorance of the faculty.",
-    "I will not conduct my own fire drills.",
-    "I will not prescribe medication.",
-    ]
-    for line in lines:
-        textob.textLine(line)
-    c.drawText(textob)
-    c.showPage()
-    c.save()
-    buf.seek(0)
-    return FileResponse(buf, as_attachment=True, filename='bart.pdf')
-
-
-# Pagination
-def list_subscribers(request):
-    p = Paginator(MyClubUser.objects.all(), 1)
-    page = request.GET.get('page')
-    subscribers = p.get_page(page)
-    return render(request, 'events/subscribers.html', {'subscribers': subscribers})
 
 # Show calaendar in home page 
 def index(request, month=date.today().month, year=date.today().year):
@@ -91,3 +57,9 @@ def add_venue(request):
          'events/add_venue.html', 
          {'form': form, 'submitted': submitted}
          )
+
+def list_subscribers(request):
+     p = Paginator(MyClubUser.objects.all(), 2)
+     page = request.GET.get('page')
+     subscribers = p.get_page(page)
+     return render(request, 'events/subscribers.html', {'subscribers': subscribers})
