@@ -444,10 +444,16 @@
             {{ 1|ordinal }}, {{ 2|ordinal }}, {{ 3|ordinal }}, {{ 20|ordinal }}
         </div>
         <div id="custom_filter_reverse_string">
-        <h2>Custom Tags and Filters</h2>
+        <h2>Custom Filters</h2>
             {{ "James is in rehab again"|reverse }}<br />
         
         </div>
+        <div id="custom_tag">
+           <h2>Custom Tags</h2>
+                {% create_date today %}
+        
+        </div>
+        {% announcements %}
 
 
 
