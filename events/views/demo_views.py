@@ -57,25 +57,25 @@ def template_demo(request):
         past = datetime(1985, 11, 5)
         future = datetime(2035, 11, 5)
         best_bands = [
-        {'name': 'The Angels', 'country': 'Australia'},
-        {'name': 'AC/DC', 'country': 'Australia'},
-        {'name': 'Nirvana', 'country': 'USA'},
-        {'name': 'The Offspring', 'country': 'USA'},
-        {'name': 'Iron Maiden', 'country': 'UK'},
-        {'name': 'Rammstein', 'country': 'Germany'},
+            {'name': 'The Angels', 'country': 'Australia'},
+            {'name': 'AC/DC', 'country': 'Australia'},
+            {'name': 'Nirvana', 'country': 'USA'},
+            {'name': 'The Offspring', 'country': 'USA'},
+            {'name': 'Iron Maiden', 'country': 'UK'},
+            {'name': 'Rammstein', 'country': 'Germany'},
         ]
         aussie_bands = ['Australia', ['The Angels', 'AC/DC', 'The Living End']]
         venues_js = serializers.serialize('json', Venue.venues.all())
         return render(request, 'events/template_demo.html',
         {
-        'somevar': somevar,
-        'anothervar': anothervar,
-        'empty_list': empty_list,
-        'color_list': color_list,
-        'best_bands': best_bands,
-        'today': today,
-        'past': past,
-        'future': future,
-        'aussie_bands': aussie_bands,
-        'venues': venues_js,
+            'somevar': somevar,
+            'anothervar': anothervar,
+            'empty_list': empty_list,
+            'color_list': color_list,
+            'best_bands': best_bands,
+            'today': today,
+            'past': past,
+            'future': future,
+            'aussie_bands': aussie_bands,
+            'venues': venues_js,
         })
