@@ -82,11 +82,22 @@ def template_demo(request):
             'venues': venues_js,
         })
 
+# RequestContext example
+
 def context_demo(request):
 
 #    template = Template('{{ user }}<br>{{ perms }}<br>{{ request}}<br>{{ messages }}')
-   template = Template('{{ LANGUAGE_CODE }}<br>{{ LANGUAGE_BIDI }}')
+#    template = Template('{{ LANGUAGE_CODE }}<br>{{ LANGUAGE_BIDI }}')
+   template = Template('{{ foo }}<br>{{ bar }}<br>{{ baz }}')
    
-   con = RequestContext(request)
+   con = RequestContext(request, processors=[my_processor])
    
    return HttpResponse(template.render(con))
+
+# Custom Context Processor example
+def my_processor(request):
+    return {
+    'foo': 'foo',
+    'bar': 'bar',
+    'baz': 'baz',
+    }
