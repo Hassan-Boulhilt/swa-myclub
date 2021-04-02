@@ -1,3 +1,5 @@
+
+from django.template import RequestContext, Template
 from django.core import serializers
 from datetime import datetime
 from django.shortcuts import render
@@ -79,3 +81,12 @@ def template_demo(request):
             'aussie_bands': aussie_bands,
             'venues': venues_js,
         })
+
+def context_demo(request):
+
+#    template = Template('{{ user }}<br>{{ perms }}<br>{{ request}}<br>{{ messages }}')
+   template = Template('{{ LANGUAGE_CODE }}<br>{{ LANGUAGE_BIDI }}')
+   
+   con = RequestContext(request)
+   
+   return HttpResponse(template.render(con))
