@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.contrib.admin import AdminSite
 from django.contrib.auth.models import User, Group
 from .models import Venue, MyClubUser, Event
+from events.forms import VenueForm
 
 class EventsAdmin(AdminSite):
     site_header = "Swa-Club Administration"
@@ -10,6 +11,7 @@ class EventsAdmin(AdminSite):
 admin_site = EventsAdmin(name='eventsadmin')
 @admin.register(Venue,site=admin_site)
 class VenueAdmin(admin.ModelAdmin):
+    form = VenueForm
     list_display =('name', 'address', 'phone')
     ordering = ('name',)
     search_fields = ('name','address')
