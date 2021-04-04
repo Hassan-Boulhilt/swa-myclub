@@ -41,6 +41,11 @@ class VenueAdmin(admin.ModelAdmin):
         EventInline,
         ]
 
+    # Override get_list_display methods's ModelAdmin
+    def get_list_display(self, request):
+
+        return ('name', 'address', 'phone', 'web')
+
 @admin.register(Event, site=admin_site)
 class EventAdmin(admin.ModelAdmin):
     # fields = (('name', 'venue'), 'event_date', 'description', 'manager')
