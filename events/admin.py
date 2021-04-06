@@ -5,6 +5,8 @@ from .models import Venue, MyClubUser, Event
 from events.forms import VenueForm
 from django.http import HttpResponse
 import csv
+from django import forms
+from ckeditor.widgets import CKEditorWidget
 
 # Model admin option TabularInline "ManyToMany" relation
 class AttendeeInline(admin.TabularInline):
@@ -72,9 +74,17 @@ def venue_csv(modeladmin, request, queryset):
     
     return response
 venue_csv.short_description = "Export Selected Venues to CSV"
+
+class EventAdminForm(forms.ModelForm):
+    description = forms.CharField(widget=CKEditorWidget())
+    class Meta:
+        model = Event
+        fields = '__all__'
+    
 @admin.register(Event, site=admin_site)
 class EventAdmin(admin.ModelAdmin):
     # fields = (('name', 'venue'), 'event_date', 'description', 'manager')
+    form = EventAdminForm
     list_display = ('name', 'event_date', 'venue', 'manager')
     list_filter = ('event_date','venue')
     ordering = ('-event_date',)
