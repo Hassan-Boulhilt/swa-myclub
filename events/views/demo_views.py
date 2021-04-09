@@ -11,6 +11,7 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.units import inch
 from reportlab.lib.pagesizes import letter
 from events.models import Venue
+from django.views.generic.base import TemplateView
 
 def gen_text(request):
     response = HttpResponse(content_type='text/plain')
@@ -101,3 +102,9 @@ def my_processor(request):
     'bar': 'bar',
     'baz': 'baz',
     }
+class TemplateViewDemo(TemplateView):
+    template_name = "events/cbv_demo.html"
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = "Testing The TemplateView CBV"
+        return context
