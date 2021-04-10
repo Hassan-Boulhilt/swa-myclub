@@ -22,6 +22,7 @@ from django.contrib.auth import views as auth_views
 from . import contact
 from django.views.generic.base import TemplateView
 from events.views import TemplateViewDemo
+from django.views.generic.base import RedirectView
 # admin.site.site_header = "Swa-Club Administration"
 # admin.site.site_title  = "Swa-Club Site Admin"
 # admin.site.index_title = "Swa-Club Site Admin Home"
@@ -29,6 +30,7 @@ from events.views import TemplateViewDemo
 
 urlpatterns = [
     # path('cbvdemo/', TemplateView.as_view(template_name='events/cbv_demo.html')),
+    path('home/', RedirectView.as_view(url='/', permanent=True)),
     path('cbvdemo/', TemplateViewDemo.as_view()),
     path('admin/', admin.site.urls), 
     path('eventsadmin/',admin_site.urls), 
