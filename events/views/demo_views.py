@@ -1,4 +1,4 @@
-from django.views.generic.dates import ArchiveIndexView
+from django.views.generic.dates import ArchiveIndexView, MonthArchiveView
 from django.template import RequestContext, Template
 from django.core import serializers
 from datetime import datetime
@@ -22,7 +22,14 @@ class ArchiveIndexViewDemo(ArchiveIndexView):
     model=Event
     date_field="event_date"
     allow_future = True
-    
+
+class MonthArchiveViewDemo(MonthArchiveView):
+    queryset = Event.events.all()
+    date_field="event_date"
+    context_object_name = 'event_list'
+    allow_future = True
+    month_format = '%m'
+
 # ListView-DetailView-finis
 class EventListView(ListView):
     model = Event
