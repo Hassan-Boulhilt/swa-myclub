@@ -1,4 +1,4 @@
-
+from django.views.generic.dates import ArchiveIndexView
 from django.template import RequestContext, Template
 from django.core import serializers
 from datetime import datetime
@@ -16,7 +16,13 @@ from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
+# Generic Date View
 
+class ArchiveIndexViewDemo(ArchiveIndexView):
+    model=Event
+    date_field="event_date"
+    allow_future = True
+    
 # ListView-DetailView-finis
 class EventListView(ListView):
     model = Event
