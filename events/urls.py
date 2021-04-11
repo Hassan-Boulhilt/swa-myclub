@@ -1,9 +1,16 @@
 from django.urls import path, re_path
 from . import views
 from .views import EventListView, EventDetailView, EventCreateView, EventUpdateView, EventDeleteView
+from .views import ArchiveIndexViewDemo
+# from django.views.generic.dates import ArchiveIndexView
+# from .models import Event
+
+
 urlpatterns=[
 
     path('', views.index, name="index"),
+    # path('eventarchive/', ArchiveIndexView.as_view(model=Event, date_field="event_date")),
+    path('eventarchive/', ArchiveIndexViewDemo.as_view(), name='index-event'),
     path('condemo/', views.context_demo, name='condemo'),
     path('template_demo/', views.template_demo, name='template-demo'),
     # path('<int:year>/<str:month>/', views.index, name="index"),
