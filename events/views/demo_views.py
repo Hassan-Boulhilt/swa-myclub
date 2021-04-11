@@ -14,14 +14,22 @@ from events.models import Venue, Event, MyClubUser
 from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
+from django.views.generic.edit import CreateView
+from django.urls import reverse_lazy
 
 # ListView-DetailView-finis
-class ListViewDemo(ListView):
+class EventListView(ListView):
     model = Event
     context_object_name = 'all_events'
-class DetailViewDemo(DetailView):
+class EventDetailView(DetailView):
     model = Event
     context_object_name = 'event'
+class EventCreateView(CreateView):
+    model = Event
+    
+    fields = ['name', 'event_date', 'description']
+    success_url = reverse_lazy('show-events')
+
 
 def gen_text(request):
     response = HttpResponse(content_type='text/plain')
