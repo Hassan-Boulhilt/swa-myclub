@@ -10,8 +10,18 @@ import io
 from reportlab.pdfgen import canvas
 from reportlab.lib.units import inch
 from reportlab.lib.pagesizes import letter
-from events.models import Venue
+from events.models import Venue, Event, MyClubUser
 from django.views.generic.base import TemplateView
+from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
+
+# ListView-DetailView-finis
+class ListViewDemo(ListView):
+    model = Event
+    context_object_name = 'all_events'
+class DetailViewDemo(DetailView):
+    model = Event
+    context_object_name = 'event'
 
 def gen_text(request):
     response = HttpResponse(content_type='text/plain')
