@@ -16,4 +16,9 @@
         <td><strong>Description:</strong></td>
         <td>{{ event.description}}</td>
     </tr>
+    <tr>
+<td><a href="/event/update/{{ event.id }}">Update</a></td><td>&nbsp;</td>
+<td><a href="/event/delete/{{ event.id }}">Delete Event</a></td>
+</tr>
+
 </table> {% endblock content %}
