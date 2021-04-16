@@ -30,7 +30,8 @@ class EventInline(admin.StackedInline):
     fields = ('name', 'event_date')
 
     extra = 1
-@admin.register(Venue,site=admin_site)
+# @admin.register(Venue,site=admin_site)
+@admin.register(Venue)
 class VenueAdmin(admin.ModelAdmin):
     form = VenueForm
     list_display =('name', 'address', 'phone')
@@ -81,7 +82,8 @@ class EventAdminForm(forms.ModelForm):
         model = Event
         fields = '__all__'
     
-@admin.register(Event, site=admin_site)
+# @admin.register(Event, site=admin_site)
+@admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
     # fields = (('name', 'venue'), 'event_date', 'description', 'manager')
     form = EventAdminForm
@@ -112,8 +114,8 @@ class EventAdmin(admin.ModelAdmin):
 # admin.site.register(Venue)
 admin.site.register(MyClubUser)
 # admin.site.register(Event)
-admin_site.register(User)
-admin_site.register(Group)
+# admin_site.register(User)
+# admin_site.register(Group)
 
 
 

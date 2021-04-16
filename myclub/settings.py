@@ -33,8 +33,8 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     
     'ckeditor',    
-    # 'django.contrib.admin',
-    'myclub.apps.MyClubAdminConfig',
+    'django.contrib.admin',
+    # 'myclub.apps.MyClubAdminConfig',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
