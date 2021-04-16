@@ -23,9 +23,9 @@ from . import contact
 from django.views.generic.base import TemplateView
 from events.views import TemplateViewDemo
 from django.views.generic.base import RedirectView
-# admin.site.site_header = "Swa-Club Administration"
-# admin.site.site_title  = "Swa-Club Site Admin"
-# admin.site.index_title = "Swa-Club Site Admin Home"
+admin.site.site_header = "Swa-Club Administration"
+admin.site.site_title  = "Swa-Club Site Admin"
+admin.site.index_title = "Swa-Club Site Admin Home"
 
 
 urlpatterns = [
@@ -33,7 +33,7 @@ urlpatterns = [
     path('home/', RedirectView.as_view(url='/', permanent=True)),
     path('cbvdemo/', TemplateViewDemo.as_view()),
     path('admin/', admin.site.urls), 
-    path('eventsadmin/',admin_site.urls), 
+    # path('eventsadmin/',admin_site.urls), 
     # path('contact/', contact.contact, name='contact'),
     path('contact/', contact.ContactUs.as_view(), name='contact'),
     path('admin/password_reset/', auth_views.PasswordResetView.as_view(), name='admin_password_reset'),

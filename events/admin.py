@@ -1,12 +1,33 @@
 from django.contrib import admin
 from django.contrib.admin import AdminSite
 from django.contrib.auth.models import User, Group
-from .models import Venue, MyClubUser, Event
+from django.contrib.auth.admin import UserAdmin
+from .models import Venue, MyClubUser, Event, Subscriber
 from events.forms import VenueForm
 from django.http import HttpResponse
 import csv
 from django import forms
 from ckeditor.widgets import CKEditorWidget
+
+
+# Model MyClubUser option stackinline
+
+class MyClubUserInline(admin.StackedInline):
+    model =MyClubUser
+    can_delete = False
+    verbose_name = "Address and Phone"
+    verbose_name_plural = "Additional Info"
+
+class MyClubUserAdmin(UserAdmin):
+    inlines = (MyClubUserInline,)
+
+@admin.register(Subscriber)
+class SubscriberAdmin(admin.ModelAdmin):
+    list_display = ('user', 'member_level')
+    list_filter = ('member_level',)
+
+
+
 
 # Model admin option TabularInline "ManyToMany" relation
 class AttendeeInline(admin.TabularInline):
@@ -30,7 +51,8 @@ class EventInline(admin.StackedInline):
     fields = ('name', 'event_date')
 
     extra = 1
-@admin.register(Venue,site=admin_site)
+# @admin.register(Venue,site=admin_site)
+@admin.register(Venue)
 class VenueAdmin(admin.ModelAdmin):
     form = VenueForm
     list_display =('name', 'address', 'phone')
@@ -81,7 +103,8 @@ class EventAdminForm(forms.ModelForm):
         model = Event
         fields = '__all__'
     
-@admin.register(Event, site=admin_site)
+# @admin.register(Event, site=admin_site)
+@admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
     # fields = (('name', 'venue'), 'event_date', 'description', 'manager')
     form = EventAdminForm
@@ -109,11 +132,11 @@ class EventAdmin(admin.ModelAdmin):
         ]
     
 
-# admin.site.register(Venue)
+
 admin.site.register(MyClubUser)
-# admin.site.register(Event)
-admin_site.register(User)
-admin_site.register(Group)
+admin.site.unregister(User)
+admin.site.register(User, MyClubUserAdmin)
+# admin_site.register(Group)
 
 
 
